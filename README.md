@@ -3,3 +3,15 @@
 
 
 # Team 1
+Roderick
+
+Afiq
+
+Marvell
+
+Yap Hui
+
+Ziyi
+
+
+Ji Huen
