@@ -1,14 +1,13 @@
 import { useRecipesContext } from '../hooks/useRecipeContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-//date fns
+
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const RecipeDetails = ({ recipe }) => {
-    const { dispatch } = useRecipesContext(); // Get dispatch function
+    const { dispatch } = useRecipesContext(); 
     const { user } = useAuthContext();
 
-    // Define handleClick function
     const handleClick = async () => {
         if (!user) {
             alert("You must be logged in to delete a recipe!");

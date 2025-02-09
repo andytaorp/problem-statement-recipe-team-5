@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Any side effects when user logs out can be handled here
+    
   }, [user]);
 
   return (
