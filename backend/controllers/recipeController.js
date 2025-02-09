@@ -4,23 +4,31 @@ const mongoose = require("mongoose");
 // Get all recipes
 const getAllRecipes = async (req, res) => {
   const user_id = req.user._id;
-  const recipes = await Recipe.find({ userId: user_id }).sort({
-    createdAt: -1,
-  });
-  res.status(200).json(recipes);
+  try {
+    const recipes = await Recipe.find({ userId: user_id }).sort({ createdAt: -1 });
+    res.status(200).json(recipes);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching recipes" });
+  }
 };
 
 // Get a single recipe
 const getRecipe = async (req, res) => {
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid recipe id" });
   }
-  const recipe = await Recipe.findById(id);
-  if (!recipe) {
-    return res.status(404).json({ error: "No such recipe" });
+
+  try{
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ error: "No such recipe" });
+    }
+    res.status(200).json(recipe);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching recipe" });
   }
-  res.status(200).json(recipe);
 };
 
 // Create a new recipe
@@ -59,6 +67,8 @@ const createRecipe = async (req, res) => {
       difficulty,
       imageUrl,
     });
+
+
     res.status(200).json(recipe);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -71,24 +81,37 @@ const deleteRecipe = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Invalid recipe id" });
   }
-  const recipe = await Recipe.findOneAndDelete({ _id: id });
-  if (!recipe) {
-    return res.status(404).json({ error: "No such recipe" });
+
+  try{
+    const recipe = await Recipe.findOneAndDelete({ _id: id });
+    if (!recipe) {
+      return res.status(404).json({ error: "No such recipe" });
+    }
+    res.status(200).json(recipe);
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting recipe" });
   }
-  res.status(200).json(recipe);
 };
 
 // Update a recipe
 const updateRecipe = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: "Invalid recipe id" });
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid recipe id" });
+    }
+
+    try{
+      const updatedRecipe = await Recipe.findOneAndUpdate(
+        {_id: id, userId: req.user._id}, { ...req.body }, { new: true });
+
+      if (!updateRecipe) {
+        return res.status(404).json({ error: "No such recipe" });
+      }
+      res.status(200).json(recipe);
+    } catch (error) {
+      res.status(500).json({ error: "Error updating recipe" });
   }
-  const recipe = await Recipe.findOneAndUpdate({ _id: id }, { ...req.body });
-  if (!recipe) {
-    return res.status(404).json({ error: "No such recipe" });
-  }
-  res.status(200).json(recipe);
 };
 
 module.exports = {

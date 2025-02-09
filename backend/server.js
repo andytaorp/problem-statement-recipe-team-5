@@ -15,10 +15,10 @@ app.use(cors());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/ai-scanner", aiScannerRoutes);
 
 const PORT = process.env.PORT || 4000;
-mongoose
-  .connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     // Listen for requests
     app.listen(PORT, () => {

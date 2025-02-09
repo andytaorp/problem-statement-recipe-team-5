@@ -8,6 +8,22 @@ export const recipesReducer = (state, action) => {
       return {
         recipes: action.payload,
       };
+
+    case "CREATE_RECIPE":
+    return { recipes: [action.payload, ...state.recipes] 
+    };
+
+    case "UPDATE_RECIPE":
+    return {
+      recipes: state.recipes.map((recipe) =>
+        recipe._id === action.payload._id ? action.payload : recipe
+      ),
+    };
+
+    case "DELETE_RECIPE":
+    return { recipes: state.recipes.filter((recipe) => recipe._id !== action.payload) 
+    };
+
     case 'LOGOUT':
       return {
         recipes: null,
@@ -19,7 +35,7 @@ export const recipesReducer = (state, action) => {
 
 export const RecipesContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(recipesReducer, {
-    recipes: null,
+    recipes: [],
   });
 
   return (
