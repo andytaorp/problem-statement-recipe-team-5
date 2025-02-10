@@ -4,7 +4,7 @@
 
 # Team 1
 Roderick
-RecipeForm.js, Navbar.js , UploadImage.js , App.js, fixed the frontend 
+RecipeForm.js, Navbar.js , UploadImage.js , App.js, fixed the frontend, did the delete recipe function on the backend
 
 Afiq
 Tested backend, fixed backend db for signup and login to work
