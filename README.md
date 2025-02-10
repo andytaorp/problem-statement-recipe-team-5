@@ -4,14 +4,19 @@
 
 # Team 1
 Roderick
+RecipeForm.js, Navbar.js , UploadImage.js , App.js, fixed the frontend 
 
 Afiq
+Tested backend, fixed backend db for signup and login to work
 
 Marvell
+Recipe detials, home.js to display the recipes
 
 Yap Hui
+Implemented delete to delete recipes
 
 Ziyi
-
+Update recipe form
 
 Ji Huen
+Authentication using JWT
