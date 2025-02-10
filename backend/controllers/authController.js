@@ -11,16 +11,24 @@ const createToken = (_id) => {
 
 // login user
 const loginUser = async (req, res) => {
+  console.log("Received login request:", req.body); // Debugging line
+
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required." });
+  }
+
   try {
     const user = await User.login(email, password);
-    // create a token
     const token = createToken(user._id);
     res.status(200).json({ email, token });
+
   } catch (error) {
+    console.error("Login error:", error.message);
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // signup user
 const signupUser = async (req, res) => {
