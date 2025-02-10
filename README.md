@@ -10,7 +10,7 @@ Afiq
 Tested backend, fixed backend db for signup and login to work
 
 Marvell
-Recipe detials, home.js to display the recipes
+Recipe detials, home.js to display the recipes, authcontext.js, fixed frontend to allow for display
 
 Yap Hui
 Implemented delete to delete recipes
