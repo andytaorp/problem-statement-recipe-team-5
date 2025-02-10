@@ -30,7 +30,7 @@ const Home = () => {
     <div className="home">
       <div className="recipes">
         {recipes && recipes.map((recipe) => (
-          <RecipeDetails key={recipe._id} recipe={recipe} />
+          <RecipeDetails key={recipe._id} recipe={recipe}  />
         ))}
       </div>
       <RecipeForm />
