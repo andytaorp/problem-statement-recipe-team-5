@@ -95,7 +95,7 @@ recipe-details p {
 
 .recipe-details span:hover {
   background: var(--primary);
-  color: #fff;
+  color: black;
 }
 
 /* new recipe form */
