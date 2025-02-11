@@ -98,6 +98,21 @@ header a:hover {
   color: black;
 }
 
+.edit-button, .delete-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: blue;
+  font-size: 16px;
+  text-decoration: underline;
+  margin-right: 10px;
+}
+
+.edit-button:hover, .delete-button:hover {
+  color: darkblue;
+}
+
+
 /* new recipe form */
 label, input {
   display: block;

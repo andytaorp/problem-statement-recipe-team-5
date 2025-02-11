@@ -40,7 +40,7 @@ const RecipeDetails = ({ recipe }) => {
     }
 
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe._id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${user.token}`,
@@ -104,8 +104,8 @@ const RecipeDetails = ({ recipe }) => {
           <p>{formatDistanceToNow(new Date(recipe.createdAt), { addSuffix: true })}</p>
 
           <div className="action-buttons">
-            <span className="material-symbols-outlined edit-icon" onClick={() => setIsEditing(true)}>edit</span>
-            <span className="material-symbols-outlined delete-icon" onClick={handleDelete}>delete</span>
+            <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
+            <button className="delete-button" onClick={handleDelete}>Delete</button>
           </div>
         </>
       )}

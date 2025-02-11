@@ -20,7 +20,7 @@ function App() {
             <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
-            <Route path="/upload" element={user ? <UploadImage /> : <Navigate to="/login" />} />
+            <Route path="/upload" element={user ? <UploadImage /> : <Navigate to="UploadImage" />} />
           </Routes>
         </div>
       </BrowserRouter>
