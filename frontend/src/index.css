@@ -6,7 +6,7 @@
   --primary: #2563EB; /* New primary color: blue */
   --error: #e74c3c; /* New error color: red */
   --background: #121212; /* New background color: light grey */
-  --text-color: #fff; /* New text color: dark blue */
+  --text-color: white; /* New text color: dark blue */
   --border-color: #bdc3c7; /* New border color: grey */
   --box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Slightly darker shadow */
 }
@@ -75,10 +75,10 @@ header a:hover {
   color: var(--primary);
 }
 
-recipe-details p {
+.recipe-details p {
   margin: 0;
   font-size: 0.9em;
-  color: #555;
+  color: black;
 }
 
 .recipe-details span {

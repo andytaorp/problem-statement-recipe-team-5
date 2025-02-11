@@ -15,17 +15,16 @@ const RecipeDetails = ({ recipe }) => {
     difficulty: recipe.difficulty,
   });
 
-  const handleClick = async () => {
+  // Delete Recipe Function
+  const handleDelete = async () => {
     if (!user) {
       alert("You must be logged in to delete a recipe!");
       return;
     }
 
-    const response = await fetch(`/api/recipes/${recipe._id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe._id}`, {
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${user.token}`
-      },
+      headers: { 'Authorization': `Bearer ${user.token}` },
     });
 
     if (response.ok) {
@@ -33,15 +32,83 @@ const RecipeDetails = ({ recipe }) => {
     }
   };
 
+  // Update Recipe Function
+  const handleUpdate = async () => {
+    if (!user) {
+      alert("You must be logged in to edit a recipe!");
+      return;
+    }
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`,
+      },
+      body: JSON.stringify(updatedRecipe),
+    });
+
+    if (response.ok) {
+      const updatedData = await response.json();
+      dispatch({ type: 'UPDATE_RECIPE', payload: updatedData });
+      setIsEditing(false);
+    }
+  };
+
   return (
     <div className="recipe-details">
-      <h4>{recipe.name}</h4>
-      <p><strong>Ingredients: </strong>{recipe.ingredients}</p>
-      <p><strong>Cooking Instructions: </strong>{recipe.instructions}</p>
-      <p><strong>Preparation time: </strong>{recipe.prepTime}</p>
-      <p><strong>Difficulty level: </strong>{recipe.difficulty}</p>
-      <p>{formatDistanceToNow(new Date(recipe.createdAt), { addSuffix: true })}</p>
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+      {isEditing ? (
+        // Edit Mode
+        <div className="edit-form">
+          <input
+            type="text"
+            value={updatedRecipe.name}
+            onChange={(e) => setUpdatedRecipe({ ...updatedRecipe, name: e.target.value })}
+            placeholder="Recipe Name"
+          />
+          <textarea
+            value={updatedRecipe.ingredients}
+            onChange={(e) => setUpdatedRecipe({ ...updatedRecipe, ingredients: e.target.value })}
+            placeholder="Ingredients"
+          />
+          <textarea
+            value={updatedRecipe.instructions}
+            onChange={(e) => setUpdatedRecipe({ ...updatedRecipe, instructions: e.target.value })}
+            placeholder="Instructions"
+          />
+          <input
+            type="text"
+            value={updatedRecipe.prepTime}
+            onChange={(e) => setUpdatedRecipe({ ...updatedRecipe, prepTime: e.target.value })}
+            placeholder="Preparation Time"
+          />
+          <select
+            value={updatedRecipe.difficulty}
+            onChange={(e) => setUpdatedRecipe({ ...updatedRecipe, difficulty: e.target.value })}
+          >
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+          <button onClick={handleUpdate}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </div>
+      ) : (
+        // View Mode
+        <>
+          <h4>{recipe.name}</h4>
+          <p><strong>Ingredients: </strong>{recipe.ingredients}</p>
+          <p><strong>Cooking Instructions: </strong>{recipe.instructions}</p>
+          <p><strong>Preparation time: </strong>{recipe.prepTime}</p>
+          <p><strong>Difficulty level: </strong>{recipe.difficulty}</p>
+          <p>{formatDistanceToNow(new Date(recipe.createdAt), { addSuffix: true })}</p>
+
+          <div className="action-buttons">
+            <span className="material-symbols-outlined edit-icon" onClick={() => setIsEditing(true)}>edit</span>
+            <span className="material-symbols-outlined delete-icon" onClick={handleDelete}>delete</span>
+          </div>
+        </>
+      )}
     </div>
   );
 };
